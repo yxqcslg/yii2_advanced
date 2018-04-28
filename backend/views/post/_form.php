@@ -37,7 +37,7 @@ use yii\widgets\ActiveForm;
     ?>
     <?= $form->field($model, 'status')->dropDownList($allStatus,['prompt'=>'Please select']);?>
 
-<!--    --><?//= $form->field($model, 'author_id')->dropDownList($allAuthors,['prompt'=>'Please select']);?>
+    <?= $form->field($model, 'author_id')->dropDownList($allAuthors,['prompt'=>'Please select']);?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

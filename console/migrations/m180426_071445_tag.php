@@ -21,7 +21,7 @@ class m180426_071445_tag extends Migration
         $this->createTable('{{%tag}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string(128)->notNull(),
-            'position' => $this->integer()->notNull()->defaultValue(1),
+            'frequency' => $this->integer()->notNull()->defaultValue(0),
         ], $tableOptions);
     }
 

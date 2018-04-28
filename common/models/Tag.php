@@ -28,7 +28,7 @@ class Tag extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['position'], 'integer'],
+            [['frequency'], 'integer'],
             [['name'], 'string', 'max' => 128],
         ];
     }
@@ -41,7 +41,58 @@ class Tag extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'position' => 'Position',
+            'frequency' => 'Frequency',
         ];
+    }
+
+    public static function str2array($tags){
+        return preg_split('/\s*,\s*/',trim($tags),-1,PREG_SPLIT_NO_EMPTY);
+    }
+    public static function arraytostr($tags){
+        return implode(',', $tags);
+    }
+    public static function addTags($tags){
+        if (empty($tags)) {
+            return;
+        }
+        foreach ($tags as $name) {
+            $aTag = Tag::find()->where(['name'=>$name])->one();
+            $aTagCount = Tag::find()->where(['name'=>$name])->count();
+            if (!$aTagCount) {
+                $tag =new Tag();
+                $tag->name = $name;
+                $tag->frequency = 1;
+                $tag->save();
+            } else {
+                $aTag->frequency += 1;
+                $aTag->save();
+            }
+        }
+    }
+    public static function removeTags($tags){
+        if (empty($tags)) {
+            return;
+        }
+        foreach ($tags as $name) {
+            $aTag = Tag::find()->where(['name'=>$name])->one();
+            $aTagCount = Tag::find()->where(['name'=>$name])->count();
+            if ($aTagCount) {
+                if ($aTag->frequency <= 1) {
+                    $aTag->delete();
+                } else {
+                    $aTag->frequency -= 1;
+                    $aTag->save();
+                }
+            }
+        }
+    }
+
+    public static function updateFrequency($oldTags, $newTags){
+        if (!empty($oldTags) || !empty($newTags)) {
+            $oldTagsArr  = self::str2array($oldTags);
+            $newTagsArr = self::str2array($newTags);
+            self::addTags(array_values(array_diff($newTagsArr, $oldTagsArr)));
+            self::removeTags(array_values(array_diff($oldTagsArr, $newTagsArr)));
+        }
     }
 }

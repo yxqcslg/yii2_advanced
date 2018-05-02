@@ -122,7 +122,7 @@ class Post extends \yii\db\ActiveRecord
         return $this->hasMany(Comment::className(),['post_id'=>'id']);
     }
 
-//    public function getAuthor(){
-//        return $this->hasOne(Adminuser::className(),['author_id'=>'id']);
-//    }
+    public function getAuthor(){
+        return $this->hasOne(Adminuser::className(),['id'=>'author_id']);
+    }
 }

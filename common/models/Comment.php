@@ -73,4 +73,13 @@ class Comment extends \yii\db\ActiveRecord
         $tempLen = mb_strlen($tempStr);
         return mb_substr($tempStr, 0, 10, 'utf-8').(($tempLen > 10)?'....':'');
     }
+
+    public function approve(){
+        $this->status = 2;//设置评论状态为已审核状态
+        return ($this->save() ? true: false);
+    }
+
+    public static function getPendingCommentCount(){
+        return Comment::find()->where(['status'=>1])->count();
+    }
 }

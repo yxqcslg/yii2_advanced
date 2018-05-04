@@ -45,6 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'status',
                 'value'=>'status0.name',
                 'filter'=>\common\models\Commentstatus::find()->select(['name', 'id'])->orderBy('position')->indexBy('id')->column(),
+                'contentOptions'=>function($model){
+                    return ($model->status == 1)?['class'=>'bg-danger']:[];
+
+                }
             ],
             //'userid',
             [
@@ -63,7 +67,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'create_time',
                 'format'=>['date', 'php:Y-m-d H:i:s'],
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete} {approve}',
+                'buttons' => [
+                    'approve' => function($url, $model, $key){
+                        $options = [
+                            'title'=>Yii::t('yii','审核'),
+                            'aria-label'=>Yii::t('yii','审核'),
+                            'data-confirm'=>Yii::t('yii','你确定通过这条评论吗?'),
+                            'data-method' => 'post',
+                            'data-pjax' => '0',
+                        ];
+                        $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-check"]);
+                        return Html::a($icon, $url, $options);
+                    }
+                ]
+            ],
         ],
     ]); ?>
 </div>

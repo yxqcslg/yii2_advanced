@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'email:email',
             //'url:url',
             //'post_id',
-            //'post.title',
+            'post.title',
             //'remind',
             //'create_time:datetime',
             [

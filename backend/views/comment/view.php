@@ -30,12 +30,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'content:ntext',
-            'status',
-            'create_time:datetime',
-            'userid',
+            //'status',
+            [
+                'label'=>'status',
+                'value'=>$model->status0->name
+            ],
+            //'create_time:datetime',
+            [
+                'attribute'=>'create_time',
+                'value'=>date('Y-m-d H:i:s',$model->create_time)
+            ],
+            //'userid',
+            [
+                'label'=>'status',
+                'value'=>$model->user->username
+            ],
             'email:email',
             'url:url',
-            'post_id',
+//            'post_id',
+            [
+                'label'=>'post_id',
+                'value'=>$model->post->title
+            ],
             'remind',
         ],
     ]) ?>

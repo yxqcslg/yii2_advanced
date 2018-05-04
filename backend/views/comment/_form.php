@@ -14,22 +14,20 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'create_time')->textInput() ?>
-
-    <?= $form->field($model, 'userid')->textInput() ?>
+<!--    --><?//= $form->field($model, 'status')->textInput() ?>
+    <?php
+        $allStatus = \common\models\Commentstatus::find()->select(['name','id'])->orderBy('position')->indexBy('id')->column();
+    ?>
+    <?= $form->field($model, 'status')->dropDownList($allStatus,['prompt'=>'Please select']);?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'post_id')->textInput() ?>
-
     <?= $form->field($model, 'remind')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Update', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

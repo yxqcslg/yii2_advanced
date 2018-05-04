@@ -33,8 +33,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'content:ntext',
             'tags:ntext',
             //'status',
-            ['label'=>'status',
-            'value'=>$model->status0->name],
+            [
+                'label'=>'status',
+                'value'=>$model->status0->name
+            ],
             //'create_time:datetime',
             [
                 'attribute'=>'create_time',

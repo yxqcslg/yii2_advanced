@@ -57,4 +57,20 @@ class Comment extends \yii\db\ActiveRecord
             'remind' => 'Remind',
         ];
     }
+
+    public function getStatus0(){
+        return $this->hasOne(Commentstatus::className(),['id'=>'status']);
+    }
+
+    public function getUser(){
+        return $this->hasOne(User::className(),['id'=>'userid']);
+    }
+    public function getTitle(){
+        return $this->hasOne(Post::className(),['id'=>'post_id']);
+    }
+    public function getBeginning(){
+        $tempStr = strip_tags($this->content);
+        $tempLen = mb_strlen($tempStr);
+        return mb_substr($tempStr, 0, 10, 'utf-8').(($tempLen > 10)?'....':'');
+    }
 }

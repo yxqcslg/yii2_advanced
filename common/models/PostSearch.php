@@ -83,11 +83,11 @@ class PostSearch extends Post
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'status' => $this->status,
-            'create_time' => $this->create_time,
-            'update_time' => $this->update_time,
-            'author_id' => $this->author_id,
+            'post.id' => $this->id,
+            'post.status' => $this->status,
+            'post.create_time' => $this->create_time,
+            'post.update_time' => $this->update_time,
+            'post.author_id' => $this->author_id,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])

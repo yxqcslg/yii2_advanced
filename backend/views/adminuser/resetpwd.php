@@ -1,16 +1,16 @@
 <?php
 
 use yii\helpers\Html;
-
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Adminuser */
 
-$this->title = 'Create Adminuser';
-$this->params['breadcrumbs'][] = ['label' => 'Adminusers', 'url' => ['index']];
+$this->title = 'Reset Password';
+$this->params['breadcrumbs'][] = ['label' => 'Reset Password', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="adminuser-create">
+<div class="adminuser-resetpwd">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -18,18 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		<?php $form = ActiveForm::begin(); ?>
 
-		<?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-
-		<?= $form->field($model, 'nickname')->textInput(['maxlength' => true]) ?>
-
 		<?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
 		<?= $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]) ?>
-
-		<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
-		<?= $form->field($model, 'profile')->textarea(['rows' => 6]) ?>
-
 
         <div class="form-group">
 			<?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

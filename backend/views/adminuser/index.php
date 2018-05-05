@@ -28,14 +28,39 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'username',
             'nickname',
-            'password',
+            //'password',
             'email:email',
             //'profile:ntext',
             //'auth_key',
             //'password_hash',
             //'password_reset_token',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' =>'{view} {update} {resetpwd} {privilege}',
+                'buttons'=>[
+                        'resetpwd'=>function($url, $model, $key){
+                            $options =
+                                [
+								'title'=>Yii::t('yii','Reset Password'),
+								'aria-label'=>Yii::t('yii','Reset Password'),
+                                'data-pjax'=>'0',
+							    ];
+							$icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-lock"]);
+							return Html::a($icon, $url, $options);
+                            },
+					    'privilege'=>function($url, $model, $key){
+                            $options =
+                                [
+                                    'title'=>Yii::t('yii','Privilege'),
+                                    'aria-label'=>Yii::t('yii','Privilege'),
+                                    'data-pjax'=>'0',
+                                ];
+                            $icon = Html::tag('span', '', ['class' => "glyphicon glyphicon-user"]);
+                            return Html::a($icon, $url, $options);
+					    }
+						],
+            ],
         ],
     ]); ?>
 </div>

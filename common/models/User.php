@@ -53,8 +53,29 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-        ];
+			[['email'], 'unique'],
+			[['email'], 'required'],
+			[['email'], 'email'],
+		];
     }
+
+	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels()
+	{
+		return [
+			'id' => 'ID',
+			'username' => 'Username',
+			'auth_key' => 'Auth Key',
+			'password_hash' => 'Password Hash',
+			'password_reset_token' => 'Password Reset Token',
+			'email' => 'Email',
+			'status' => 'Status',
+			'created_at' => 'Created At',
+			'updated_at' => 'Updated At',
+		];
+	}
 
     /**
      * {@inheritdoc}
@@ -186,4 +207,12 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    public static function allStatus(){
+    	return [self::STATUS_ACTIVE=>'Active', self::STATUS_DELETED=>'Delete'];
+	}
+
+	public function getStatusStr(){
+    	return ($this->status == self::STATUS_ACTIVE) ? 'Active':'Delete';
+	}
 }

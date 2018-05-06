@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\ListView;
 use frontend\components\TagsCloudWidget;
-
+use frontend\components\RecentRelyWidget;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\PostSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -60,7 +60,9 @@ use frontend\components\TagsCloudWidget;
                 <ul class="list-group">
                     <li class="list-group-item">
                         <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>New Comment
-                    <li class="list-group-item">New Comment</li>
+                    <li class="list-group-item">
+						<?= RecentRelyWidget::widget(['recentComments'=>$recentComments])?>
+                    </li>
                 </ul>
             </div>
         </div>

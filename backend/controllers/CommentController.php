@@ -126,6 +126,9 @@ class CommentController extends Controller
     }
 
     public function actionApprove($id){
+		if (!Yii::$app->user->can('approveComment')) {
+			throw new ForbiddenHttpException('Not Allowed');
+		}
         $model = $this->findModel($id);
         if ($model->approve()) {//审核
             return $this->redirect(['index']);

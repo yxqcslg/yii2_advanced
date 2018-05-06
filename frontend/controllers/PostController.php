@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\User;
 use common\models\Comment;
 use common\models\Tag;
 use Yii;
@@ -127,4 +128,29 @@ class PostController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    public function actionDetail($id){
+    	//step1.准备数据
+		$model = $this->findModel($id);
+		$tags = Tag::findTagWeights();
+		$recentComments = Comment::findRecentComments();
+
+//		$userMe = User::findOne(Yii::$app->user->id);
+		$commentModel = new Comment();
+//		$commentModel->email =  $userMe->email;
+//		$commentModel->userid = $userMe->id;
+
+
+		//step2.当评论提时，处理评论
+		if ($commentModel->load(Yii::$app->request->post())) {
+
+		}
+
+		//step3.传递数据给视图渲染
+		return $this->render('detail', [
+			'model'=>$model,
+			'tags'=>$tags,
+			'recentComments'=>$recentComments,
+			'commentModel'=>$commentModel
+		]);
+	}
 }

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "post".
@@ -125,4 +126,28 @@ class Post extends \yii\db\ActiveRecord
     public function getAuthor(){
         return $this->hasOne(Adminuser::className(),['id'=>'author_id']);
     }
+
+    public function getUrl(){
+    	return Yii::$app->urlManager->createUrl(['post/detail','id'=>$this->id,'title'=>$this->title]);
+	}
+
+	public function getBeginning($length=288){
+    	$tempStr = strip_tags($this->content);
+		$tempLen = mb_strlen($tempStr);
+		$tempStr = mb_substr($tempStr,0,$length,'utf-8');
+		return $tempStr.($tempLen>$length?'...':'');
+	}
+
+	public function getTagLinks(){
+		$links = array();
+		foreach (Tag::str2array($this->tags) as $tag) {
+			$links[] = Html::a(Html::encode($tag), array('post/index','PostSearch[tags]'=>$tag));
+			//$links[] = Html::a(Html::encode($tag), array('post/index','PostFrontSearch[tags]'=>$tag));
+		}
+		return $links;
+	}
+
+	public function getCommentCount(){
+		return Comment::find()->where(['post_id'=>$this->id,'status'=>2])->count();
+	}
 }

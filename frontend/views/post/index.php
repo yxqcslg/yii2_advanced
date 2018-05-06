@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\ListView;
+use frontend\components\TagsCloudWidget;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\PostSearch */
@@ -50,7 +51,9 @@ use yii\widgets\ListView;
                 <ul class="list-group">
                     <li class="list-group-item">
                         <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>Tag Cloud
-                    <li class="list-group-item">Tag Cloud</li>
+                    <li class="list-group-item">
+                        <?= TagsCloudWidget::widget(['tags'=>$tags])?>
+                    </li>
                 </ul>
             </div>
             <div class="commentBox">

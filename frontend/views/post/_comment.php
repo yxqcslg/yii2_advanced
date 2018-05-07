@@ -12,6 +12,8 @@ use yii\helpers\Html;
 						<br>
 						<?= nl2br($comment->content)?>
 						<br>
+						<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+						<em><?= date('Y-m-d H:i:s', $comment->create_time)?></em>
 					</p>
 				</div>
 			</div>

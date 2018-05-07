@@ -43,6 +43,9 @@ use frontend\components\RecentRelyWidget;
                 <div class="alert alert-warning alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4>Thank you your comments, we will approve quickly</h4>
+					<p>
+						<?= nl2br($commentModel->content)?>
+					</p>
                     <span class="glyphicon glyphicon-time" aria-hidden="true"><em><?= date('Y-m-d H:i:s', $model->create_time)?></em></span>
                     <span class="glyphicon glyphicon-user" aria-hidden="true"><em><?= Html::encode($model->author->nickname)?></em></span>
                 </div>
@@ -51,7 +54,7 @@ use frontend\components\RecentRelyWidget;
                     <h5><?= $model->commentCount.' Comments'?></h5>
                     <?= $this->render('_comment', array(
                             'post'=>$model,
-                            'comments'=>$model->comments,
+                            'comments'=>$model->activeComments,
                     ))
                     ?>
                 <?php endif;?>
@@ -60,7 +63,7 @@ use frontend\components\RecentRelyWidget;
                 $postComment = new \common\models\Comment();
                 echo $this->render('_guestForm', array(
                         'id'=>$model->id,
-                        'postModel'=>$postComment,
+                        'commentModel'=>$commentModel,
                 ));
                 ?>
             </div>

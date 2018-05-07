@@ -17,6 +17,7 @@ use yii\filters\VerbFilter;
  */
 class PostController extends Controller
 {
+	public $added=0;//0->no comment,1->new comment
     /**
      * @inheritdoc
      */
@@ -133,16 +134,19 @@ class PostController extends Controller
 		$model = $this->findModel($id);
 		$tags = Tag::findTagWeights();
 		$recentComments = Comment::findRecentComments();
-
-//		$userMe = User::findOne(Yii::$app->user->id);
+		$userMe = User::findOne(Yii::$app->user->id);//只允许登录用户评论
 		$commentModel = new Comment();
-//		$commentModel->email =  $userMe->email;
-//		$commentModel->userid = $userMe->id;
+		$commentModel->email =  $userMe->email;
+		$commentModel->userid = $userMe->id;
 
 
 		//step2.当评论提时，处理评论
 		if ($commentModel->load(Yii::$app->request->post())) {
-
+			$commentModel->status=1;//new comment default status=pending
+			$commentModel->post_id=$id;
+			if ($commentModel->save()) {
+				$this->added=1;
+			}
 		}
 
 		//step3.传递数据给视图渲染
@@ -150,7 +154,8 @@ class PostController extends Controller
 			'model'=>$model,
 			'tags'=>$tags,
 			'recentComments'=>$recentComments,
-			'commentModel'=>$commentModel
+			'commentModel'=>$commentModel,
+			'added'=>$this->added
 		]);
 	}
 }

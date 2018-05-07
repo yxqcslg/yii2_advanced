@@ -48,7 +48,7 @@ use frontend\components\RecentRelyWidget;
                 </div>
 				<?php endif;?>
                 <?php if($model->commentCount >=1):?>
-                    <h5><?= $model->commentCOunt.' Comments'?></h5>
+                    <h5><?= $model->commentCount.' Comments'?></h5>
                     <?= $this->render('_comment', array(
                             'post'=>$model,
                             'comments'=>$model->comments,

@@ -1,0 +1,104 @@
+{
+    "swagger": "2.0",
+    "paths": {
+        "/api/admin/menu": {
+            "get": {
+                "tags": [
+                    "menus"
+                ],
+                "summary": "List all menu",
+                "responses": {
+                    "200": {
+                        "description": "An paged array of menu",
+                        "schema": {
+                            "$ref": "#/definitions/menus"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/follower/countries/{countryId}": {
+            "get": {
+                "tags": [
+                    "countries"
+                ],
+                "summary": "Info for a specific country",
+                "parameters": [
+                    {
+                        "name": "countryId",
+                        "in": "path",
+                        "description": "The id of the country to retrieve",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request",
+                        "schema": {
+                            "$ref": "#/definitions/Countries"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/follower/countries": {
+            "get": {
+                "tags": [
+                    "countries"
+                ],
+                "summary": "List all countries",
+                "responses": {
+                    "200": {
+                        "description": "An paged array of countries",
+                        "schema": {
+                            "$ref": "#/definitions/Countries"
+                        },
+                        "headers": {
+                            "x-next": {
+                                "description": "A link to the next page of responses",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "countries"
+                ],
+                "summary": "Create a country",
+                "responses": {
+                    "201": {
+                        "description": "Null response"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {}
+}

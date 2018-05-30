@@ -1,0 +1,1865 @@
+{
+    "swagger": "2.0",
+    "paths": {
+        "/api/content/posts?page={page}&sort={sort}&query={query}": {
+            "get": {
+                "tags": [
+                    "post"
+                ],
+                "summary": "List all posts\u56fe\u6587\u5217\u8868",
+                "description": "post",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "querys for search <br />eg.{&quot;filter&quot;:{&quot;is_reply_post&quot;:0|1, &quot;category&quot;:{&quot;in&quot;:[&quot;a&quot;,&quot;b&quot;]}, &quot;name&quot;:{&quot;like&quot;:&quot;jing&quot;, &quot;is_delete&quot;:0}}} <br />\u6ce8\u610f\uff1a\u952e\u503c\u5bf9\u5fc5\u987b\u4f7f\u7528\u53cc\u5f15\u53f7,\u6570\u5b57\u9664\u5916\r\n| \u53c2\u6570     |      \u63cf\u8ff0      |\r\n|----------|:--------------:|\r\n| is_reply_post |  0=>\u666e\u901a\u56fe\u6587 1=>\u5916\u94fe\u56fe\u6587 \u6240\u6709\u7c7b\u578b \u4e0d\u9700\u8981\u4f20\u503c  :\u8868\u793a\u7b49\u4e8e|\r\n| name |  \u5185\u90e8\u540d\u79f0 like \u8868\u793a\u6a21\u7cca\u67e5\u8be2 |\r\n| category |  \u5206\u7c7b\u540d\u79f0 in \u8868\u793a\u53ef\u591a\u9009 |\r\n| is_delete |  \u662f\u5426\u5220\u9664 0\u5426  1\u662f |\r\n",
+                        "required": false
+                    },
+                    {
+                        "name": "page",
+                        "in": "path",
+                        "description": "page number",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "path",
+                        "description": "sort field\r\n| \u53c2\u6570     |      \u63cf\u8ff0      |\r\n|----------|:--------------:|\r\n| update_time |  \u66f4\u65b0\u65f6\u95f4  \u6b63\u5e8f + \u5012\u5e8f - eg. -update_time \u8868\u793a\u4ee5\u66f4\u65b0\u65f6\u95f4\u5012\u5e8f|\r\n",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An paged array of posts<br />\r\n| \u53c2\u6570     |      \u63cf\u8ff0      |\r\n|----------|:--------------:|\r\n| id |  \u56fe\u6587id |\r\n| name |  \u5185\u90e8\u540d\u79f0 |\r\n| type |  1=>\u5355\u56fe\u6587 2=>\u591a\u56fe\u6587 |\r\n| title |  \u56fe\u6587\u6807\u9898 |\r\n| is_new |  \u662f\u5426\u6700\u65b0\u5bfc\u5165 0=>\u5426 1=>\u662f |\r\n| is_delete |  \u662f\u5426\u5728\u56de\u6536\u7ad9 0=>\u5426 1=>\u662f |\r\n| is_reply_post | 0=>\u666e\u901a\u56fe\u6587 1=>\u5916\u94fe\u56fe\u6587 |\r\n| create_time | \u521b\u5efa\u65f6\u95f4 |\r\n| update_time | \u66f4\u65b0\u65f6\u95f4 |\r\n| img | \u56fe\u6587\u7684\u56fe\u7247\u5730\u5740 |\r\n| url | \u56fe\u6587\u7684\u94fe\u63a5\u5730\u5740 |\r\n| des | \u56fe\u6587\u7684\u63cf\u8ff0 |\r\n| reason | \u5931\u8d25\u539f\u56e0 1 \u5c01\u9762\u56fe\u7247\u5931\u6548  2 \u94fe\u63a5\u5931\u6548 |\r\n| is_send | \u662f\u5426\u53d1\u9001 0=>\u672a\u53d1\u9001 1=>\u5df2\u53d1\u9001 \u5df2\u53d1\u9001 \u65e0\u6cd5\u7f16\u8f91\u548c\u5220\u9664 |\r\n",
+                        "schema": {
+                            "$ref": "#/definitions/posts"
+                        }
+                    },
+                    "304": {
+                        "description": "Not Modified"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/content/posts/import": {
+            "post": {
+                "tags": [
+                    "post"
+                ],
+                "summary": "import form wechat \u4ece\u5fae\u4fe1\u5bfc\u5165",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "import to wechat<br />\r\n| \u53c2\u6570     |      \u63cf\u8ff0      |\r\n|----------|:--------------:|\r\n| data |  \u56fe\u6587ids |\r\n\t ",
+                        "schema": {
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "example": "0"
+                                },
+                                "msg": {
+                                    "type": "string",
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "example": 1
+                                    }
+                                }
+                            },
+                            "type": "array"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/content/posts/export": {
+            "post": {
+                "tags": [
+                    "post"
+                ],
+                "summary": "export to wechat\u5bfc\u51fa\u5230\u5fae\u4fe1",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "export ids",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "hash": {
+                                        "type": "string",
+                                        "example": "3b959fd048"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "export to wechat<br />\r\n| \u53c2\u6570     |      \u63cf\u8ff0      |\r\n|----------|:--------------:|\r\n| data |  \u56fe\u6587ids |\r\n",
+                        "schema": {
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "example": "0"
+                                },
+                                "msg": {
+                                    "type": "string",
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "example": 2
+                                    }
+                                }
+                            },
+                            "type": "array"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/content/posts/category?page={page}&query={query}": {
+            "get": {
+                "tags": [
+                    "post"
+                ],
+                "summary": "List all post categories \u83b7\u53d6\u56fe\u6587\u5206\u7c7b",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "path",
+                        "description": "page number",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "querys for search<br />eg.{&quot;filter&quot;:{&quot;category&quot;:{&quot;like&quot;:&quot;a&quot;}}} <br />\u6ce8\u610f\uff1a\u952e\u503c\u5bf9\u5fc5\u987b\u4f7f\u7528\u53cc\u5f15\u53f7\r\n| \u53c2\u6570     |      \u63cf\u8ff0      |\r\n|----------|:--------------:|\r\n| category |  \u5206\u7c7b\u540d\u79f0  |\r\n    ",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An paged array of postcategory<br />\r\n| \u53c2\u6570     |      \u63cf\u8ff0      |\r\n|----------|:--------------:|\r\n| category |  \u5206\u7c7b\u540d\u79f0 \u540d\u79f0\u6ca1\u6709id \u641c\u7d22\u4f20\u503c\u8bf7\u76f4\u63a5\u4f20 |\r\n",
+                        "schema": {
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "example": "0"
+                                },
+                                "msg": {
+                                    "type": "string",
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "properties": {
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "category": {
+                                                        "type": "string",
+                                                        "example": "o2o"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "_links": {
+                                            "properties": {
+                                                "self": {
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string",
+                                                            "example": "http://app.jingsocial.com/Postcategory/page/2"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "first": {
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string",
+                                                            "example": "http://app.jingsocial.com/Postcategory/page/1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "prev": {
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string",
+                                                            "example": "http://app.jingsocial.com/Postcategory/page/1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "next": {
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string",
+                                                            "example": "http://app.jingsocial.com/Postcategory/page/3"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "last": {
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string",
+                                                            "example": "http://app.jingsocial.com/Postcategory/page/3"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "_meta": {
+                                            "properties": {
+                                                "totalCount": {
+                                                    "type": "number",
+                                                    "example": "60"
+                                                },
+                                                "pageCount": {
+                                                    "type": "number",
+                                                    "example": "3"
+                                                },
+                                                "currentPage": {
+                                                    "type": "number",
+                                                    "example": "2"
+                                                },
+                                                "perPage": {
+                                                    "type": "number",
+                                                    "example": "20"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "array"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/content/posts/{id}": {
+            "get": {
+                "tags": [
+                    "post"
+                ],
+                "summary": "post view\u83b7\u53d6\u56fe\u6587",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "post id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "restore posts<br />\r\n    | \u53c2\u6570     |      \u63cf\u8ff0      |\r\n    |----------|:--------------:|\r\n    | id |  \u56fe\u6587id |\r\n    | name |  \u5185\u90e8\u540d\u79f0 |\r\n    | type |  1=>\u5355\u56fe\u6587 2=>\u591a\u56fe\u6587 |\r\n    | title |  \u56fe\u6587\u6807\u9898 |\r\n    | is_new |  \u662f\u5426\u6700\u65b0\u5bfc\u5165 0=>\u5426 1=>\u662f |\r\n    | is_delete |  \u662f\u5426\u5728\u56de\u6536\u7ad9 0=>\u5426 1=>\u662f |\r\n    | is_reply_post | 0=>\u666e\u901a\u56fe\u6587 1=>\u5916\u94fe\u56fe\u6587 |\r\n    | create_time | \u521b\u5efa\u65f6\u95f4 |\r\n    | img | \u56fe\u6587\u7684\u56fe\u7247\u5730\u5740 |\r\n    | url | \u56fe\u6587\u7684\u94fe\u63a5\u5730\u5740 |\r\n    | des | \u56fe\u6587\u7684\u63cf\u8ff0 |\r\n    | reason | \u5931\u8d25\u539f\u56e0 \u4e3a\u7a7a\u8868\u793a\u6210\u529f \u5bfc\u5165\u65f6\u56fe\u7247\u672a\u5bfc\u5165\u6216\u94fe\u63a5\u5931\u6548 |\r\n    | is_send | \u662f\u5426\u53d1\u9001 0=>\u672a\u53d1\u9001 1=>\u5df2\u53d1\u9001 \u5df2\u53d1\u9001 \u65e0\u6cd5\u7f16\u8f91\u548c\u5220\u9664 |\r\n    | rid | \u540cid |\r\n    | ord | \u56fe\u6587\u6392\u5e8f 0,1,2... \u6b63\u5e8f |\r\n    | tags_id | tag\u7684id \u4ee5,\u5206\u5272 |\r\n    | content | \u56fe\u6587\u5185\u5bb9 |\r\n    | detail | \u8be6\u60c5 |\r\n    | is_teaser_length_limit | \u662f\u5426\u6709\u539f\u6587\u9875 0 \u6ca1\u6709  1 \u6709 |\r\n    | post_type | post\u7c7b\u578b  0 \u666e\u901a  1 \u6a21\u677f |\r\n    | need_open_comment | \u8bc4\u8bba 0 \u5173\u95ed  1 \u5f00\u542f |\r\n    | only_fans_can_comment | \u8bc4\u8bba\u9650\u5236 0 \u6240\u6709  1 \u7c89\u4e1d\u53ef\u8bc4 |\r\n    | is_add_tags | \u662f\u5426\u6dfb\u52a0tag 0 \u5426  1 \u662f |\r\n    ",
+                        "schema": {
+                            "$ref": "#/definitions/postsdetail"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "post"
+                ],
+                "summary": "delete post \u5220\u9664\u56fe\u6587",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "delete id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "delete post<br />\r\n    | \u53c2\u6570     |      \u63cf\u8ff0      |\r\n    |----------|:--------------:|\r\n    | data |  \u56fe\u6587id |\r\n    ",
+                        "schema": {
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "example": "0"
+                                },
+                                "msg": {
+                                    "type": "string",
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "example": 2
+                                    }
+                                }
+                            },
+                            "type": "array"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/content/posts/copy": {
+            "post": {
+                "tags": [
+                    "post"
+                ],
+                "summary": "copy post \u590d\u5236\u56fe\u6587",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "copy id",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "copy post<br />\r\n    | \u53c2\u6570     |      \u63cf\u8ff0      |\r\n    |----------|:--------------:|\r\n    | data |  \u56fe\u6587id |\r\n    ",
+                        "schema": {
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "example": "0"
+                                },
+                                "msg": {
+                                    "type": "string",
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "example": 2
+                                    }
+                                }
+                            },
+                            "type": "array"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/content/posts/restore": {
+            "post": {
+                "tags": [
+                    "post"
+                ],
+                "summary": "restore posts \u6062\u590d\u56fe\u6587",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "restore ids",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "restore posts<br />\r\n    | \u53c2\u6570     |      \u63cf\u8ff0      |\r\n    |----------|:--------------:|\r\n    | data |  \u56fe\u6587ids |\r\n    ",
+                        "schema": {
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "example": "0"
+                                },
+                                "msg": {
+                                    "type": "string",
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "example": 2
+                                    }
+                                }
+                            },
+                            "type": "array"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/content/postsyncs?page={page}&sort={sort}&query={query}": {
+            "get": {
+                "tags": [
+                    "post sync"
+                ],
+                "summary": "List all post sync \u540c\u6b65\u5217\u8868",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "path",
+                        "description": "page number",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "querys for search <br /> eg.{&quot;filter&quot;:{&quot;sync_type&quot;:1|2|3|4, &quot;post_name&quot;:{&quot;like&quot;:&quot;jing&quot;}}} <br />\u6ce8\u610f\uff1a\u952e\u503c\u5bf9\u5fc5\u987b\u4f7f\u7528\u53cc\u5f15\u53f7,\u6570\u5b57\u9664\u5916\r\n| \u53c2\u6570     |                                             \u63cf\u8ff0                                              |\r\n|----------|:---------------------------------------------------------------------------------------------:|\r\n| sync_type |  1 => \u540c\u6b65\u5230\u4e3b\u8d26\u53f7 2 => \u540c\u6b65\u5230\u5b50\u8d26\u53f7 3 => \u4ece\u5fae\u4fe1\u5bfc\u5165 4 => \u5bfc\u51fa\u5230\u5fae\u4fe1 (\u6240\u6709 \u4e0d\u9700\u8981\u4f20\u503c) |\r\n| post_name |  \u56fe\u6587\u5185\u5bb9\u540d\u79f0 like \u8868\u793a\u6a21\u7cca\u67e5\u8be2|\r\n",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "path",
+                        "description": "sort field\r\n| \u53c2\u6570     |      \u63cf\u8ff0      |\r\n|----------|:--------------:|\r\n| sync_time |  \u540c\u6b65\u65f6\u95f4  \u6b63\u5e8f + \u5012\u5e8f - eg. -sync_time \u4ee5\u540c\u6b65\u65f6\u95f4\u5012\u5e8f|\r\n",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An paged array of postsync<br />\r\n| \u53c2\u6570     |                                             \u63cf\u8ff0                             |\r\n|----------|:----------------------------------------------------------------------------:|\r\n| id |  id  |\r\n| sync_type |  1 => \u540c\u6b65\u5230\u4e3b\u8d26\u53f7 2 => \u540c\u6b65\u5230\u5b50\u8d26\u53f7 3 => \u4ece\u5fae\u4fe1\u5bfc\u5165 4 => \u5bfc\u51fa\u5230\u5fae\u4fe1  |\r\n| create_time |  \u521b\u5efa\u65f6\u95f4 |\r\n| status |  \u72b6\u6001 1=>\u6210\u529f  2=>\u5931\u8d25  3=>\u7b49\u5f85\u4e2d 4=>\u5df2\u6700\u65b0 \u672a\u66f4\u65b0  \u5176\u4ed6\u540c\u5fae\u4fe1 https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433747234 |\r\n| post_name |  \u56fe\u6587\u540d\u79f0 |\r\n| sync_to |  \u540c\u6b65\u5230\u8d26\u6237\u7684id |\r\n",
+                        "schema": {
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "example": "0"
+                                },
+                                "msg": {
+                                    "type": "string",
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "properties": {
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "sync_time": {
+                                                        "type": "integer",
+                                                        "format": "int10",
+                                                        "example": "1523934656"
+                                                    },
+                                                    "sync_type": {
+                                                        "type": "number",
+                                                        "enum": [
+                                                            "1",
+                                                            "2",
+                                                            "3",
+                                                            "4"
+                                                        ]
+                                                    },
+                                                    "create_time": {
+                                                        "type": "integer",
+                                                        "format": "int10",
+                                                        "example": "1523934655"
+                                                    },
+                                                    "status": {
+                                                        "type": "number",
+                                                        "enum": [
+                                                            "1",
+                                                            "2"
+                                                        ],
+                                                        "example": "1"
+                                                    },
+                                                    "post_name": {
+                                                        "type": "string",
+                                                        "example": "\u5fae\u4fe1\u81ea\u52a8\u5316\u8425\u9500"
+                                                    },
+                                                    "post_id": {
+                                                        "type": "int",
+                                                        "example": "10"
+                                                    },
+                                                    "sync_to": {
+                                                        "type": "int",
+                                                        "example": "10"
+                                                    },
+                                                    "hash": {
+                                                        "type": "string",
+                                                        "example": "3b959fd048"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "_links": {
+                                            "properties": {
+                                                "self": {
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string",
+                                                            "example": "http://app.jingsocial.com/Postsync/page/2"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "first": {
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string",
+                                                            "example": "http://app.jingsocial.com/Postsync/page/1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "prev": {
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string",
+                                                            "example": "http://app.jingsocial.com/Postsync/page/1"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "next": {
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string",
+                                                            "example": "http://app.jingsocial.com/Postsync/page/3"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "last": {
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string",
+                                                            "example": "http://app.jingsocial.com/Postsync/page/3"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "_meta": {
+                                            "properties": {
+                                                "totalCount": {
+                                                    "type": "number",
+                                                    "example": "60"
+                                                },
+                                                "pageCount": {
+                                                    "type": "number",
+                                                    "example": "3"
+                                                },
+                                                "currentPage": {
+                                                    "type": "number",
+                                                    "example": "2"
+                                                },
+                                                "perPage": {
+                                                    "type": "number",
+                                                    "example": "20"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "array"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/content/postsyncs": {
+            "post": {
+                "tags": [
+                    "post sync"
+                ],
+                "summary": "Create a postsync \u540c\u6b65\u5230\u4e3b\u8d26\u53f7",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "List of post sync object",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "hash": {
+                                        "type": "string",
+                                        "example": "3b959fd048"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Post sync Status",
+                        "schema": {
+                            "properties": {
+                                "code": {
+                                    "type": "number",
+                                    "example": "0"
+                                },
+                                "msg": {
+                                    "type": "string",
+                                    "example": "success"
+                                }
+                            },
+                            "type": "array"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/engagement/qrcodes/{qrcodeId}": {
+            "get": {
+                "tags": [
+                    "qrcodes"
+                ],
+                "summary": "Info for a specific qrcode",
+                "parameters": [
+                    {
+                        "name": "qrcodeId",
+                        "in": "path",
+                        "description": "The id of the qrcode to retrieve",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "The id of the qrcode to retrieve",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request",
+                        "schema": {
+                            "$ref": "#/definitions/qrcodes"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/engagement/qrcodes": {
+            "post": {
+                "tags": [
+                    "qrcodes"
+                ],
+                "summary": "Create a qrcode",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Null response"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/engagement/qrcodes?page={page}&sort={sort}": {
+            "get": {
+                "tags": [
+                    "qrcodes"
+                ],
+                "summary": "List all qrcodes",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "path",
+                        "description": "page number",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "path",
+                        "description": "sort field",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An paged array of qrcodes",
+                        "schema": {
+                            "$ref": "#/definitions/qrcodes"
+                        },
+                        "headers": {
+                            "x-pagination-current-page": {
+                                "description": "current page number",
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "10101": {
+                        "description": "jwt code invalid",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/engagement/qrcodes/batchupdate/{id}": {
+            "put": {
+                "tags": [
+                    "qrcodes"
+                ],
+                "summary": "batch update qrcode",
+                "description": "This can only be done by the logged in user.",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id that need to be updated, use `,` for multi ids",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Updated qrcode object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/qrcode"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid qrcode supplied"
+                    },
+                    "404": {
+                        "description": "qrcode not found"
+                    }
+                }
+            }
+        },
+        "/api/engagement/qrcodecategories?page={page}&sort={sort}": {
+            "get": {
+                "tags": [
+                    "qrcode category"
+                ],
+                "summary": "List all qrcodecategories",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "path",
+                        "description": "page number",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "path",
+                        "description": "sort field",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An paged array of qrcodecategories",
+                        "schema": {
+                            "$ref": "#/definitions/qrcodecategories"
+                        }
+                    },
+                    "10101": {
+                        "description": "jwt code invalid",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/engagement/qrcodecategories/typefilter": {
+            "get": {
+                "tags": [
+                    "qrcode category"
+                ],
+                "summary": "List all typefilters",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An paged array of typefilters",
+                        "schema": {
+                            "$ref": "#/definitions/typefilters"
+                        }
+                    },
+                    "10101": {
+                        "description": "jwt code invalid",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/engagement/qrcodecategories/{id}": {
+            "get": {
+                "tags": [
+                    "qrcode category"
+                ],
+                "summary": "Info for a specific qrcode category",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "The id of the qrcode category to retrieve",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the qrcode category to retrieve",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request",
+                        "schema": {
+                            "$ref": "#/definitions/qrcodes"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "qrcode category"
+                ],
+                "summary": "Updated qrcode category",
+                "description": "This can only be done by the logged in user.",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id that need to be updated",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Updated qrcode category object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/qrcode category"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid qrcode category supplied"
+                    },
+                    "404": {
+                        "description": "qrcode category not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "qrcode category"
+                ],
+                "summary": "Delete qrcode category",
+                "description": "This can only be done by the logged in user.",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id that needs to be deleted",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid qrcode category supplied"
+                    },
+                    "404": {
+                        "description": "qrcode category not found"
+                    }
+                }
+            }
+        },
+        "/api/engagement/qrcodecategories": {
+            "post": {
+                "tags": [
+                    "qrcode category"
+                ],
+                "summary": "Creates list of qrcode category with given input array",
+                "description": "",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "List of qrcode category object",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/qrcode category"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/user/users/login": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "user login",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "The user name for login",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "The password for login in clear text",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Null response"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/users/menu": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "get user menus",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "J-CustomerUUID",
+                        "in": "header",
+                        "description": "Jingsocial Customer UUID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Null response"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/users/logout": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "user logout",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "description": "api jwt token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Null response"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "posts": {
+            "properties": {
+                "code": {
+                    "type": "number",
+                    "example": "0"
+                },
+                "msg": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "data": {
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "description": "PostID",
+                                        "type": "integer",
+                                        "format": "int20",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "JingSocial internal"
+                                    },
+                                    "type": {
+                                        "type": "number",
+                                        "example": 1
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "JingSocial"
+                                    },
+                                    "is_new": {
+                                        "type": "boolen",
+                                        "example": 0
+                                    },
+                                    "is_delete": {
+                                        "type": "boolean",
+                                        "example": 0
+                                    },
+                                    "is_reply_post": {
+                                        "type": "boolean",
+                                        "example": 0
+                                    },
+                                    "create_time": {
+                                        "type": "integer",
+                                        "format": "int10",
+                                        "example": 1351234567
+                                    },
+                                    "update_time": {
+                                        "type": "integer",
+                                        "format": "int10",
+                                        "example": 1351234568
+                                    },
+                                    "img": {
+                                        "type": "string",
+                                        "example": "http://app.jingsocial.com/upload/20180417/QQ85p3l60CYcBIA.jpg"
+                                    },
+                                    "url": {
+                                        "type": "string",
+                                        "example": "http://app.jingsocial.com/preview/1"
+                                    },
+                                    "des": {
+                                        "type": "string",
+                                        "example": "\u5fae\u4fe1\u81ea\u52a8\u5316\u8425\u9500"
+                                    },
+                                    "reason": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "is_send": {
+                                        "description": "1 sent, 0 not sent",
+                                        "type": "number",
+                                        "format": "int10",
+                                        "enum": [
+                                            "1",
+                                            "0"
+                                        ]
+                                    },
+                                    "list": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "\u6848\u4f8b\u5206\u4eab"
+                                                },
+                                                "img": {
+                                                    "type": "string",
+                                                    "example": "http://app.jingsocial.com/upload/20180417/QQ85p3l60CYcBIB.jpg"
+                                                },
+                                                "url": {
+                                                    "type": "string",
+                                                    "example": "http://app.jingsocial.com/preview/2"
+                                                },
+                                                "des": {
+                                                    "type": "string",
+                                                    "example": "1\u4e2a\u6708\u7c89\u4e1d\u783410\u4e07"
+                                                },
+                                                "reason": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "_links": {
+                            "properties": {
+                                "self": {
+                                    "properties": {
+                                        "href": {
+                                            "type": "string",
+                                            "example": "http://app.jingsocial.com/Post/page/2"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "first": {
+                                    "properties": {
+                                        "href": {
+                                            "type": "string",
+                                            "example": "http://app.jingsocial.com/Post/page/1"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "prev": {
+                                    "properties": {
+                                        "href": {
+                                            "type": "string",
+                                            "example": "http://app.jingsocial.com/Post/page/1"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "next": {
+                                    "properties": {
+                                        "href": {
+                                            "type": "string",
+                                            "example": "http://app.jingsocial.com/Post/page/3"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "last": {
+                                    "properties": {
+                                        "href": {
+                                            "type": "string",
+                                            "example": "http://app.jingsocial.com/Post/page/3"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "_meta": {
+                            "properties": {
+                                "totalCount": {
+                                    "type": "number",
+                                    "example": "60"
+                                },
+                                "pageCont": {
+                                    "type": "number",
+                                    "example": "3"
+                                },
+                                "currentPage": {
+                                    "type": "number",
+                                    "example": "2"
+                                },
+                                "perPage": {
+                                    "type": "number",
+                                    "example": "20"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "array"
+        },
+        "postsdetail": {
+            "properties": {
+                "code": {
+                    "type": "number",
+                    "example": "0"
+                },
+                "msg": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "data": {
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "description": "PostID",
+                                        "type": "integer",
+                                        "format": "int20",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "JingSocial internal"
+                                    },
+                                    "type": {
+                                        "type": "number",
+                                        "example": "1"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "JingSocial"
+                                    },
+                                    "is_new": {
+                                        "type": "boolen",
+                                        "example": 0
+                                    },
+                                    "is_delete": {
+                                        "type": "boolean",
+                                        "example": 0
+                                    },
+                                    "is_reply_post": {
+                                        "type": "boolean",
+                                        "example": "0"
+                                    },
+                                    "create_time": {
+                                        "type": "integer",
+                                        "format": "int10",
+                                        "example": "1351234567"
+                                    },
+                                    "img": {
+                                        "type": "string",
+                                        "example": "http://app.jingsocial.com/upload/20180417/QQ85p3l60CYcBIA.jpg"
+                                    },
+                                    "url": {
+                                        "type": "string",
+                                        "example": "http://app.jingsocial.com/preview/1"
+                                    },
+                                    "des": {
+                                        "type": "string",
+                                        "example": "\u5fae\u4fe1\u81ea\u52a8\u5316\u8425\u9500"
+                                    },
+                                    "reason": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "is_send": {
+                                        "description": "1 sent, 0 not sent",
+                                        "type": "number",
+                                        "format": "int10",
+                                        "enum": [
+                                            "1",
+                                            "0"
+                                        ]
+                                    },
+                                    "rid": {
+                                        "description": "same as id",
+                                        "type": "number",
+                                        "format": "int10"
+                                    },
+                                    "ord": {
+                                        "description": "\u591a\u56fe\u6587\u6392\u5e8f 1,2,3  \u5355\u56fe\u6587\u4e3a0 ",
+                                        "type": "number"
+                                    },
+                                    "tags_id": {
+                                        "description": "tag id",
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "description": "content",
+                                        "type": "string"
+                                    },
+                                    "detail": {
+                                        "description": "detail",
+                                        "type": "string"
+                                    },
+                                    "is_teaser_length_limit": {
+                                        "description": "teaser length",
+                                        "type": "integer"
+                                    },
+                                    "post_type": {
+                                        "description": "post_type",
+                                        "type": "integer"
+                                    },
+                                    "need_open_comment": {
+                                        "description": "open_comment",
+                                        "type": "integer"
+                                    },
+                                    "only_fans_can_comment": {
+                                        "description": "only_fans_can_comment",
+                                        "type": "integer"
+                                    },
+                                    "is_add_tags": {
+                                        "description": "0",
+                                        "type": "integer"
+                                    },
+                                    "list": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "\u6848\u4f8b\u5206\u4eab"
+                                                },
+                                                "img": {
+                                                    "type": "string",
+                                                    "example": "http://app.jingsocial.com/upload/20180417/QQ85p3l60CYcBIB.jpg"
+                                                },
+                                                "url": {
+                                                    "type": "string",
+                                                    "example": "http://app.jingsocial.com/preview/2"
+                                                },
+                                                "des": {
+                                                    "type": "string",
+                                                    "example": "1\u4e2a\u6708\u7c89\u4e1d\u783410\u4e07"
+                                                },
+                                                "reason": {
+                                                    "type": "string",
+                                                    "example": "\u56fe\u7247\u4e0d\u6b63\u786e"
+                                                },
+                                                "rid": {
+                                                    "description": "same as id",
+                                                    "type": "number",
+                                                    "format": "int10"
+                                                },
+                                                "ord": {
+                                                    "description": "\u591a\u56fe\u6587\u6392\u5e8f 1,2,3  \u5355\u56fe\u6587\u4e3a0 ",
+                                                    "type": "number"
+                                                },
+                                                "tags_id": {
+                                                    "description": "tag id",
+                                                    "type": "string"
+                                                },
+                                                "content": {
+                                                    "description": "content",
+                                                    "type": "string"
+                                                },
+                                                "detail": {
+                                                    "description": "detail",
+                                                    "type": "string"
+                                                },
+                                                "is_teaser_length_limit": {
+                                                    "description": "teaser length",
+                                                    "type": "integer"
+                                                },
+                                                "post_type": {
+                                                    "description": "post_type",
+                                                    "type": "integer"
+                                                },
+                                                "need_open_comment": {
+                                                    "description": "open_comment",
+                                                    "type": "integer"
+                                                },
+                                                "only_fans_can_comment": {
+                                                    "description": "only_fans_can_comment",
+                                                    "type": "integer"
+                                                },
+                                                "is_add_tags": {
+                                                    "description": "0",
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "_links": {
+                            "properties": {
+                                "self": {
+                                    "properties": {
+                                        "href": {
+                                            "type": "string",
+                                            "example": "http://app.jingsocial.com/Post/page/2"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "first": {
+                                    "properties": {
+                                        "href": {
+                                            "type": "string",
+                                            "example": "http://app.jingsocial.com/Post/page/1"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "prev": {
+                                    "properties": {
+                                        "href": {
+                                            "type": "string",
+                                            "example": "http://app.jingsocial.com/Post/page/1"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "next": {
+                                    "properties": {
+                                        "href": {
+                                            "type": "string",
+                                            "example": "http://app.jingsocial.com/Post/page/3"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "last": {
+                                    "properties": {
+                                        "href": {
+                                            "type": "string",
+                                            "example": "http://app.jingsocial.com/Post/page/3"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "_meta": {
+                            "properties": {
+                                "totalCount": {
+                                    "type": "number",
+                                    "example": "60"
+                                },
+                                "pageCont": {
+                                    "type": "number",
+                                    "example": "3"
+                                },
+                                "currentPage": {
+                                    "type": "number",
+                                    "example": "2"
+                                },
+                                "perPage": {
+                                    "type": "number",
+                                    "example": "20"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "array"
+        },
+        "query": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "filter": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "enum": [
+                                        "all",
+                                        "normal",
+                                        "reply"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
